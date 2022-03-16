@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Shouldly;
+using ProductManagement.Core;
 
 namespace ProductManagement.Test
 {
@@ -12,14 +14,29 @@ namespace ProductManagement.Test
         [Fact]
         public void ShouldReturnProductRequestValues()
         {
-            var productRequest = new ProductRequest
+            //Arrange
+            var request = new ProductRequest
             {
+                ProductId = 1,
                 ProductName = "Mazola Oil",
                 CategoryId = 10,
+                CategoryName = "Cooking Oil",
             };
             var service = new ProductRequestService();
 
-            ProductResult result = service.AddProduct(productRequest);
+            //Act
+            ProductResult result = service.AddProduct(request);
+
+            //Assert
+            Assert.NotNull(result);
+            
+            Assert.Equal(request.ProductId, result.ProductId);
+            Assert.Equal(request.ProductName, result.ProductName);
+            Assert.Equal(request.CategoryId, result.CategoryId);
+            Assert.Equal(request.CategoryName, result.CategoryName);
+
+            result.ShouldNotBeNull();
+            result.ProductName.ShouldBe(request.ProductName);
         }
     }
 }
