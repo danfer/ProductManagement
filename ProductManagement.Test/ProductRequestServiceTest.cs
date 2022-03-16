@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Shouldly;
-using ProductManagement.Core;
+using ProductManagement.Core.Models;
+using ProductManagement.Core.Services;
 
 namespace ProductManagement.Test
 {

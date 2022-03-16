@@ -1,6 +1,7 @@
-﻿using System;
+﻿using ProductManagement.Core.Models;
+using System;
 
-namespace ProductManagement.Core
+namespace ProductManagement.Core.Services
 {
     public class ProductRequestService
     {

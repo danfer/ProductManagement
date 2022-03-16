@@ -1,6 +1,6 @@
-﻿namespace ProductManagement.Core
+﻿namespace ProductManagement.Core.Models
 {
-    public class ProductRequest
+    public class ProductResult
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }
