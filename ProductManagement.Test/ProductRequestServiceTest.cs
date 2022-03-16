@@ -7,7 +7,7 @@ using Xunit;
 
 namespace ProductManagement.Test
 {
-    public class ProductRequestProcessorTest
+    public class ProductRequestServiceTest
     {
         [Fact]
         public void ShouldReturnProductRequest()
@@ -19,7 +19,7 @@ namespace ProductManagement.Test
                 CategoryId = 10,
                 CategoryName = "Cooking Oil"
             };
-            var requestor = new ProductRequestProcessor();
+            var service = new ProductRequestService();
         }
     }
 }
