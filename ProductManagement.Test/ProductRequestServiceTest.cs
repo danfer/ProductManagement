@@ -10,16 +10,15 @@ namespace ProductManagement.Test
     public class ProductRequestServiceTest
     {
         [Fact]
-        public void ShouldReturnProductRequest()
+        public void ShouldReturnProductRequestValues()
         {
             var productRequest = new ProductRequest
             {
-                ProductId = 1,
                 ProductName = "Mazola Oil",
-                CategoryId = 10,
-                CategoryName = "Cooking Oil"
             };
             var service = new ProductRequestService();
+
+            ProductResult result = service.Products(productRequest);
         }
     }
 }
