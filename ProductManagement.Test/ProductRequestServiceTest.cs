@@ -15,10 +15,11 @@ namespace ProductManagement.Test
             var productRequest = new ProductRequest
             {
                 ProductName = "Mazola Oil",
+                CategoryId = 10,
             };
             var service = new ProductRequestService();
 
-            ProductResult result = service.Products(productRequest);
+            ProductResult result = service.AddProduct(productRequest);
         }
     }
 }

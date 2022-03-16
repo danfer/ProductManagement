@@ -8,7 +8,7 @@ namespace ProductManagement.Test
         {
         }
 
-        internal ProductResult Products(ProductRequest productRequest)
+        internal ProductResult AddProduct(ProductRequest productRequest)
         {
             throw new NotImplementedException();
         }
