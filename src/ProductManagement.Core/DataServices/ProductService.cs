@@ -1,11 +1,12 @@
-﻿using ProductManagement.Core.Models;
+﻿using ProductManagement.Core.Domain;
+using ProductManagement.Core.Models;
 using System;
 
-namespace ProductManagement.Core.Services
+namespace ProductManagement.Core.DataServices
 {
-    public class ProductRequestService
+    public class ProductService: IProductService
     {
-        public ProductRequestService()
+        public ProductService()
         {
         }
 
@@ -21,6 +22,11 @@ namespace ProductManagement.Core.Services
                 CategoryId = productRequest.CategoryId,
                 CategoryName = productRequest.CategoryName,
             };
+        }
+
+        public void Save(ProductRequest product)
+        {
+            throw new NotImplementedException();
         }
     }
 }

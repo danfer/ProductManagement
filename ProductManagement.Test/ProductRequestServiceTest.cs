@@ -6,45 +6,47 @@ using System.Threading.Tasks;
 using Xunit;
 using Shouldly;
 using ProductManagement.Core.Models;
-using ProductManagement.Core.Services;
+using ProductManagement.Core.DataServices;
 
 namespace ProductManagement.Test
 {
     public class ProductRequestServiceTest
     {
-        private ProductRequestService _service;
+        private ProductService _service;
+        private ProductRequest _request;
 
         public ProductRequestServiceTest()
         {
             //Arrange
-            _service = new ProductRequestService();
-        }
+            _service = new ProductService();
 
-        [Fact]
-        public void ShouldReturnProductRequestValues()
-        {
-            //Arrange
-            var request = new ProductRequest
+            _request = new ProductRequest
             {
                 ProductId = 1,
                 ProductName = "Mazola Oil",
                 CategoryId = 10,
                 CategoryName = "Cooking Oil",
             };
+        }
+
+        [Fact]
+        public void ShouldReturnProductRequestValues()
+        {
+            //Arrange            
 
             //Act
-            ProductResult result = _service.AddProduct(request);
+            ProductResult result = _service.AddProduct(_request);
 
             //Assert
             Assert.NotNull(result);
             
-            Assert.Equal(request.ProductId, result.ProductId);
-            Assert.Equal(request.ProductName, result.ProductName);
-            Assert.Equal(request.CategoryId, result.CategoryId);
-            Assert.Equal(request.CategoryName, result.CategoryName);
+            Assert.Equal(_request.ProductId, result.ProductId);
+            Assert.Equal(_request.ProductName, result.ProductName);
+            Assert.Equal(_request.CategoryId, result.CategoryId);
+            Assert.Equal(_request.CategoryName, result.CategoryName);
 
             result.ShouldNotBeNull();
-            result.ProductName.ShouldBe(request.ProductName);
+            result.ProductName.ShouldBe(_request.ProductName);
         }
 
         [Fact]
@@ -55,6 +57,12 @@ namespace ProductManagement.Test
 
             //Assert
             exception.ParamName.ShouldBe("productRequest");
+        }
+
+        [Fact]
+        public void ShouldSaveProductRequest()
+        {
+            _service.AddProduct(_request);
         }
     }
 }
