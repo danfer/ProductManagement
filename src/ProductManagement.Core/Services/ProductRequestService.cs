@@ -11,6 +11,9 @@ namespace ProductManagement.Core.Services
 
         public ProductResult AddProduct(ProductRequest productRequest)
         {
+            if (productRequest is null)
+                throw new ArgumentNullException(nameof(productRequest));
+
             return new ProductResult
             {
                 ProductId = productRequest.ProductId,

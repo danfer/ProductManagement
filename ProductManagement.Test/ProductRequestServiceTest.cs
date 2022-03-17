@@ -12,6 +12,14 @@ namespace ProductManagement.Test
 {
     public class ProductRequestServiceTest
     {
+        private ProductRequestService _service;
+
+        public ProductRequestServiceTest()
+        {
+            //Arrange
+            _service = new ProductRequestService();
+        }
+
         [Fact]
         public void ShouldReturnProductRequestValues()
         {
@@ -23,10 +31,9 @@ namespace ProductManagement.Test
                 CategoryId = 10,
                 CategoryName = "Cooking Oil",
             };
-            var service = new ProductRequestService();
 
             //Act
-            ProductResult result = service.AddProduct(request);
+            ProductResult result = _service.AddProduct(request);
 
             //Assert
             Assert.NotNull(result);
@@ -38,6 +45,16 @@ namespace ProductManagement.Test
 
             result.ShouldNotBeNull();
             result.ProductName.ShouldBe(request.ProductName);
+        }
+
+        [Fact]
+        public void ShouldThrowExceptionForNullRequest()
+        {
+            //Act
+            var exception = Should.Throw<ArgumentNullException>(() => _service.AddProduct(null));
+
+            //Assert
+            exception.ParamName.ShouldBe("productRequest");
         }
     }
 }
