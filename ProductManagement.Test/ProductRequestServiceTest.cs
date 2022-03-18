@@ -7,19 +7,21 @@ using Xunit;
 using Shouldly;
 using ProductManagement.Core.Models;
 using ProductManagement.Core.DataServices;
+using ProductManagement.Core.Processors;
+using Moq;
+using ProductManagement.Core.Domain;
 
 namespace ProductManagement.Test
 {
     public class ProductRequestServiceTest
     {
-        private ProductService _service;
+        private ProductProcessor _processor;
         private ProductRequest _request;
+        private Mock<IProductService> _productServiceMock;
 
         public ProductRequestServiceTest()
         {
             //Arrange
-            _service = new ProductService();
-
             _request = new ProductRequest
             {
                 ProductId = 1,
@@ -27,6 +29,9 @@ namespace ProductManagement.Test
                 CategoryId = 10,
                 CategoryName = "Cooking Oil",
             };
+
+            _productServiceMock = new Mock<IProductService>();
+            _processor = new ProductProcessor(_productServiceMock.Object);
         }
 
         [Fact]
@@ -35,7 +40,7 @@ namespace ProductManagement.Test
             //Arrange            
 
             //Act
-            ProductResult result = _service.AddProduct(_request);
+            ProductResult result = _processor.AddProduct(_request);
 
             //Assert
             Assert.NotNull(result);
@@ -53,7 +58,7 @@ namespace ProductManagement.Test
         public void ShouldThrowExceptionForNullRequest()
         {
             //Act
-            var exception = Should.Throw<ArgumentNullException>(() => _service.AddProduct(null));
+            var exception = Should.Throw<ArgumentNullException>(() => _processor.AddProduct(null));
 
             //Assert
             exception.ParamName.ShouldBe("productRequest");
@@ -62,7 +67,19 @@ namespace ProductManagement.Test
         [Fact]
         public void ShouldSaveProductRequest()
         {
-            _service.AddProduct(_request);
+            Product savedProduct = null;
+            _productServiceMock.Setup(q => q.Save(It.IsAny<Product>()))
+                .Callback<Product>(product =>
+                {
+                    savedProduct = product;
+                });
+            _processor.AddProduct(_request);
+
+            _productServiceMock.Verify(q => q.Save(It.IsAny<Product>()), Times.Once);
+
+            savedProduct.ShouldNotBeNull();
+
+            savedProduct.ProductName.ShouldBe(_request.ProductName);
         }
     }
 }

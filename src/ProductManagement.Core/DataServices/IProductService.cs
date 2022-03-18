@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace ProductManagement.Core.DataServices
 {
-    internal interface IProductService
+    public interface IProductService
     {
-        void Save(ProductRequest product);
-
-        ProductResult AddProduct(ProductRequest productRequest);
+        void Save(Product product);
     }
 }
