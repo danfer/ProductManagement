@@ -22,16 +22,18 @@ namespace ProductManagement.Core.Processors
             if (productRequest is null)
                 throw new ArgumentNullException(nameof(productRequest));
 
-            _productService.Save(new Product
-            {
-                ProductId = productRequest.ProductId,
-                ProductName = productRequest.ProductName,
-                CategoryId = productRequest.CategoryId,
-                CategoryName = productRequest.CategoryName,
-            });
+            _productService.Save(CreateProductObject<Product>(productRequest));
 
-            return new ProductResult
-            {
+            return CreateProductObject<ProductResult>(productRequest);
+        }
+
+        //Generic method can use any class inheriting from ProductBase
+        private TProduct CreateProductObject<TProduct>(ProductRequest productRequest) where TProduct 
+            : ProductBase, new()
+        {
+            return new TProduct
+                {
+
                 ProductId = productRequest.ProductId,
                 ProductName = productRequest.ProductName,
                 CategoryId = productRequest.CategoryId,
