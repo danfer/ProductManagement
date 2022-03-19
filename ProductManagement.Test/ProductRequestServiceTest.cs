@@ -18,6 +18,7 @@ namespace ProductManagement.Test
         private ProductProcessor _processor;
         private ProductRequest _request;
         private Mock<IProductService> _productServiceMock;
+        private List<ProductResult> _availableProducts;
 
         public ProductRequestServiceTest()
         {
@@ -30,8 +31,13 @@ namespace ProductManagement.Test
                 CategoryName = "Cooking Oil",
             };
 
+            _availableProducts = new List<ProductResult>() { new ProductResult() };
+
             _productServiceMock = new Mock<IProductService>();
-            _processor = new ProductProcessor(_productServiceMock.Object);
+            _productServiceMock.Setup(x => x.GetAvailableProducts())
+                .Returns(_availableProducts);
+
+            _processor = new ProductProcessor(_productServiceMock.Object);            
         }
 
         [Fact]
@@ -80,6 +86,20 @@ namespace ProductManagement.Test
             savedProduct.ShouldNotBeNull();
 
             savedProduct.ProductName.ShouldBe(_request.ProductName);
+        }
+
+        [Fact]
+        public void ShouldGetAvailableProducts()
+        {
+            List<ProductResult> availableProducts = new List<ProductResult>();
+           
+            availableProducts = _processor.GetAvailableProducts().ToList();
+
+            _productServiceMock.Verify(q => q.GetAvailableProducts(), Times.Once);
+
+            availableProducts.ShouldNotBeNull();
+
+            availableProducts.Count().ShouldBeInRange<int>(0, 1);
         }
     }
 }

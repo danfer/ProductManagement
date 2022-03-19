@@ -11,5 +11,6 @@ namespace ProductManagement.Core.DataServices
     public interface IProductService
     {
         void Save(Product product);
+        IEnumerable<ProductResult> GetAvailableProducts();
     }
 }

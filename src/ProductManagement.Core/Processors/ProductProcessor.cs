@@ -27,6 +27,20 @@ namespace ProductManagement.Core.Processors
             return CreateProductObject<ProductResult>(productRequest);
         }
 
+        public IEnumerable<ProductResult> GetAvailableProducts()
+        {
+            var products = _productService.GetAvailableProducts();
+
+            return products.Select(x => new ProductResult
+            {
+                ProductId = x.ProductId,
+                ProductName = x.ProductName,
+                CategoryId = x.CategoryId,
+                CategoryName = x.CategoryName,
+                Quantity = x.Quantity,
+            }).ToList();
+        }
+
         //Generic method can use any class inheriting from ProductBase
         private TProduct CreateProductObject<TProduct>(ProductRequest productRequest) where TProduct 
             : ProductBase, new()
