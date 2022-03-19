@@ -22,9 +22,35 @@ namespace ProductManagement.Core.Processors
             if (productRequest is null)
                 throw new ArgumentNullException(nameof(productRequest));
 
-            _productService.Save(CreateProductObject<Product>(productRequest));
+            _productService.Add(CreateProductObject<Product>(productRequest));
 
             return CreateProductObject<ProductResult>(productRequest);
+        }
+
+        public ProductResult UpdateProduct(ProductRequest productRequest)
+        {
+            if (productRequest is null)
+                throw new ArgumentNullException(nameof(productRequest));
+
+            _productService.Update(CreateProductObject<Product>(productRequest));
+
+            return CreateProductObject<ProductResult>(productRequest);
+        }
+
+        public ProductResult GetProduct(ProductRequest productRequest)
+        {
+            if (productRequest is null)
+                throw new ArgumentNullException(nameof(productRequest));
+
+            return CreateProductObject<ProductResult>(productRequest);
+        }
+
+        public void DeleteProduct(ProductRequest productRequest)
+        {
+            if (productRequest is null)
+                throw new ArgumentNullException(nameof(productRequest));
+
+            _productService.Delete(_productService.GetProduct(productRequest.ProductId));
         }
 
         public IEnumerable<ProductResult> GetAvailableProducts()
