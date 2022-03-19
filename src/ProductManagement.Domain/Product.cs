@@ -1,11 +1,11 @@
-﻿using ProductManagement.Core.Models;
+﻿using ProductManagement.Domain.BaseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductManagement.Core.Domain
+namespace ProductManagement.Domain
 {
     public class Product : ProductBase
     {

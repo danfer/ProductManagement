@@ -1,6 +1,7 @@
 ﻿using ProductManagement.Core.DataServices;
-using ProductManagement.Core.Domain;
 using ProductManagement.Core.Models;
+using ProductManagement.Domain;
+using ProductManagement.Domain.BaseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductManagement.Core.Models
+namespace ProductManagement.Domain.BaseModels
 {
     public abstract class ProductBase
     {
