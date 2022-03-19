@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using Shouldly;
 using ProductManagement.Core.Models;
 using ProductManagement.Core.DataServices;
 using ProductManagement.Core.Processors;
 using Moq;
-using ProductManagement.Core.Domain;
+using ProductManagement.Domain;
 
 namespace ProductManagement.Test
 {

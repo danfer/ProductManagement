@@ -9,6 +9,6 @@ namespace ProductManagement.Domain
 {
     public class Product : ProductBase
     {
-
+    
     }
 }
