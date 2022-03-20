@@ -1,3 +1,6 @@
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using ProductManagement.Persistence;
 using Serilog;
 using Serilog.Events;
 
@@ -30,6 +33,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+var connString = "DataSource=:memory";
+var conn = new SqliteConnection(connString);
+conn.Open();
+
+builder.Services.AddDbContext<ProductManagementDbContext>(opt => opt.UseSqlite(conn));
 
 app.UseHttpsRedirection();
 
