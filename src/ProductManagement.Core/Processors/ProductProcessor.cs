@@ -23,7 +23,7 @@ namespace ProductManagement.Core.Processors
             if (productRequest is null)
                 throw new ArgumentNullException(nameof(productRequest));
 
-            _productService.Add(CreateProductObject<Product>(productRequest));
+            _productService.Add(CreateProductObject<ProductRequest>(productRequest));
 
             return CreateProductObject<ProductResult>(productRequest);
         }
@@ -33,7 +33,7 @@ namespace ProductManagement.Core.Processors
             if (productRequest is null)
                 throw new ArgumentNullException(nameof(productRequest));
 
-            _productService.Update(CreateProductObject<Product>(productRequest));
+            _productService.Update(CreateProductObject<ProductRequest>(productRequest));
 
             return CreateProductObject<ProductResult>(productRequest);
         }
@@ -51,7 +51,15 @@ namespace ProductManagement.Core.Processors
             if (productRequest is null)
                 throw new ArgumentNullException(nameof(productRequest));
 
-            _productService.Delete(_productService.GetProduct(productRequest.ProductId));
+            var productResult = _productService.GetProduct(productRequest.ProductId);
+
+            _productService.Delete(new ProductRequest
+            {
+                ProductId = productResult.ProductId,
+                ProductName = productResult.ProductName,
+                CategoryId = productResult.CategoryId,
+                CategoryName = productResult.CategoryName,
+            });
         }
 
         public IEnumerable<ProductResult> GetAvailableProducts()

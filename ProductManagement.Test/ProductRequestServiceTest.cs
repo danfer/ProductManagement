@@ -72,14 +72,14 @@ namespace ProductManagement.Test
         public void ShouldSaveProductRequest()
         {
             Product savedProduct = null;
-            _productServiceMock.Setup(q => q.Add(It.IsAny<Product>()))
+            _productServiceMock.Setup(q => q.Add(It.IsAny<ProductRequest>()))
                 .Callback<Product>(product =>
                 {
                     savedProduct = product;
                 });
             _processor.AddProduct(_request);
 
-            _productServiceMock.Verify(q => q.Add(It.IsAny<Product>()), Times.Once);
+            _productServiceMock.Verify(q => q.Add(It.IsAny<ProductRequest>()), Times.Once);
 
             savedProduct.ShouldNotBeNull();
 
@@ -89,22 +89,22 @@ namespace ProductManagement.Test
         [Fact]
         public void ShouldDeleteProduct()
         {
-            _productServiceMock.Setup(q => q.Delete(It.IsAny<Product>()));
+            _productServiceMock.Setup(q => q.Delete(It.IsAny<ProductRequest>()));
 
             _processor.DeleteProduct(_request);
 
-            _productServiceMock.Verify(q => q.Delete(It.IsAny<Product>()), Times.Once);
+            _productServiceMock.Verify(q => q.Delete(It.IsAny<ProductRequest>()), Times.Once);
 
         }
 
         [Fact]
         public void ShouldUpdateProduct()
         {
-            _productServiceMock.Setup(q => q.Update(It.IsAny<Product>()));
+            _productServiceMock.Setup(q => q.Update(It.IsAny<ProductRequest>()));
 
             _processor.UpdateProduct(_request);
 
-            _productServiceMock.Verify(q => q.Update(It.IsAny<Product>()), Times.Once);
+            _productServiceMock.Verify(q => q.Update(It.IsAny<ProductRequest>()), Times.Once);
         }
 
         [Fact]

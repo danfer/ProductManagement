@@ -18,12 +18,24 @@ namespace ProductManagement.Persistence.Repositories
 
         public ProductManagementDbContext _context { get; }
 
-        public void Add(Product product)
+        public void Add(ProductRequest product)
         {
-            throw new NotImplementedException();
+            var lastProduct = _context.Products.OrderByDescending(p => p.ProductId).FirstOrDefault();
+            int nextProductId = 1;
+            if (lastProduct != null)
+                nextProductId = lastProduct.ProductId;
+
+            _context.Products.Add(new Product
+            {
+                ProductId = nextProductId,
+                ProductName = product.ProductName,
+                CategoryId = product.CategoryId,
+                CategoryName = product.CategoryName
+            });
+            _context.SaveChanges();
         }
 
-        public void Delete(Product product)
+        public void Delete(ProductRequest product)
         {
             throw new NotImplementedException();
         }
@@ -44,12 +56,12 @@ namespace ProductManagement.Persistence.Repositories
             }).ToList();
         }
 
-        public Product GetProduct(int id)
+        public void Update(ProductRequest product)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Product product)
+        ProductResult IProductService.GetProduct(int id)
         {
             throw new NotImplementedException();
         }

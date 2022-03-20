@@ -10,10 +10,10 @@ namespace ProductManagement.Core.DataServices
 {
     public interface IProductService
     {
-        Product GetProduct(int id);
-        void Add(Product product);
-        void Update(Product product);
+        ProductResult GetProduct(int id);
+        void Add(ProductRequest product);
+        void Update(ProductRequest product);
         IEnumerable<ProductResult> GetAvailableProducts();
-        void Delete(Product product);
+        void Delete(ProductRequest product);
     }
 }
