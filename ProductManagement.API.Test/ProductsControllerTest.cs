@@ -31,15 +31,17 @@ namespace ProductManagement.API.Test
         }
 
         [Theory]
-        [InlineData(1, true, typeof(OkObjectResult))]
-        [InlineData(0, false, typeof(BadRequestObjectResult))]
-        public async Task ShouldCallProductMethodWhenValid(int expectedMethodCalls, bool isModelValid, Type expectedActionResultType)
+        [InlineData(1, true, typeof(OkObjectResult), ProductResultFlag.Success)]
+        [InlineData(0, false, typeof(BadRequestObjectResult), ProductResultFlag.Failure)]
+        public async Task ShouldCallProductMethodWhenValid(int expectedMethodCalls, bool isModelValid, Type expectedActionResultType,
+                                                            ProductResultFlag productResultFlag)
         {
             // Arrange
             if (!isModelValid)
             {
                 _controller.ModelState.AddModelError("Key", "ErrorMessage");
             }
+            _result.Flag = productResultFlag;
 
             // Act
             var result = await _controller.AddProduct(_request);
