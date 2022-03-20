@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ProductManagement.Core.Processors
 {
-    public class ProductProcessor
+    public class ProductProcessor : IProductProcessor
     {
         private readonly IProductService _productService;
         public ProductProcessor(IProductService productService)
@@ -23,10 +23,16 @@ namespace ProductManagement.Core.Processors
             if (productRequest is null)
                 throw new ArgumentNullException(nameof(productRequest));
 
-            _productService.Add(CreateProductObject<ProductRequest>(productRequest));
+            var result = CreateProductObject<ProductResult>(productRequest);
 
-            return CreateProductObject<ProductResult>(productRequest);
+            if (result == null)
+                result.Flag = Enums.ProductResultFlag.Failure;
+            else
+                result.Flag = Enums.ProductResultFlag.Success;
+         
+            return result;
         }
+
 
         public ProductResult UpdateProduct(ProductRequest productRequest)
         {
@@ -77,11 +83,11 @@ namespace ProductManagement.Core.Processors
         }
 
         //Generic method can use any class inheriting from ProductBase
-        private TProduct CreateProductObject<TProduct>(ProductRequest productRequest) where TProduct 
+        private TProduct CreateProductObject<TProduct>(ProductRequest productRequest) where TProduct
             : ProductBase, new()
         {
             return new TProduct
-                {
+            {
 
                 ProductId = productRequest.ProductId,
                 ProductName = productRequest.ProductName,

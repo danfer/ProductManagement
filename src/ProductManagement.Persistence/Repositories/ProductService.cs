@@ -33,6 +33,8 @@ namespace ProductManagement.Persistence.Repositories
                 CategoryName = product.CategoryName
             });
             _context.SaveChanges();
+
+
         }
 
         public void Delete(ProductRequest product)

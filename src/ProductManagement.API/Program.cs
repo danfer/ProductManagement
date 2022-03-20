@@ -1,5 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using ProductManagement.Core.Processors;
 using ProductManagement.Persistence;
 using Serilog;
 using Serilog.Events;
@@ -38,6 +39,8 @@ var conn = new SqliteConnection(connString);
 conn.Open();
 
 builder.Services.AddDbContext<ProductManagementDbContext>(opt => opt.UseSqlite(conn));
+
+builder.Services.AddScoped<IProductProcessor, ProductProcessor>();
 
 app.UseHttpsRedirection();
 
