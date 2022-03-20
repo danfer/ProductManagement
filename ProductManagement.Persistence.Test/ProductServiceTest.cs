@@ -15,16 +15,12 @@ namespace ProductManagement.Persistence.Test
             var dbOptions = new DbContextOptionsBuilder<ProductManagementDbContext>()
                 .UseInMemoryDatabase("AvailableProductsTest")
                 .Options;
-
             using var context = new ProductManagementDbContext(dbOptions);
             context.Add(new Product { ProductId = 1, ProductName = "Cheese", CategoryId = 33, CategoryName = "Dairy", Quantity = 100 });
             context.Add(new Product { ProductId = 2, ProductName = "Carrot", CategoryId = 15, CategoryName = "Vegetables", Quantity = 221 });
             context.Add(new Product { ProductId = 3, ProductName = "Onion", CategoryId = 15, CategoryName = "Vegetables", Quantity = 0 });
-
             context.SaveChanges();
-
             var productService = new ProductService(context);
-
             //Act
             var availableProducts = productService.GetAvailableProducts();
 

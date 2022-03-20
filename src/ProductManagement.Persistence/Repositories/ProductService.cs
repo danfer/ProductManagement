@@ -30,7 +30,18 @@ namespace ProductManagement.Persistence.Repositories
 
         public IEnumerable<ProductResult> GetAvailableProducts()
         {
-            throw new NotImplementedException();
+            var availableProducts = _context.Products
+                .Where(p => p.Quantity > 0)
+                .ToList();
+
+            return availableProducts.Select(x => new ProductResult
+            {
+                ProductId = x.ProductId,
+                ProductName = x.ProductName,
+                CategoryId = x.CategoryId,
+                CategoryName = x.CategoryName,
+                Quantity = x.Quantity,
+            }).ToList();
         }
 
         public Product GetProduct(int id)
