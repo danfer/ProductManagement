@@ -11,7 +11,7 @@ namespace ProductManagement.Core.DataServices
     public interface IProductService
     {
         ProductResult GetProduct(int id);
-        void Add(ProductRequest product);
+        ProductResult Add(ProductRequest product);
         void Update(ProductRequest product);
         IEnumerable<ProductResult> GetAvailableProducts();
         void Delete(ProductRequest product);

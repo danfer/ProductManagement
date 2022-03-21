@@ -23,7 +23,8 @@ namespace ProductManagement.Core.Processors
             if (productRequest is null)
                 throw new ArgumentNullException(nameof(productRequest));
 
-            var result = CreateProductObject<ProductResult>(productRequest);
+            var result = _productService.Add(productRequest);
+                //CreateProductObject<ProductResult>(productRequest);
 
             if (result == null)
                 result.Flag = Enums.ProductResultFlag.Failure;

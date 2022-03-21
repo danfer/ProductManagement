@@ -1,7 +1,10 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using ProductManagement.API.Helpers;
+using ProductManagement.Core.DataServices;
 using ProductManagement.Core.Processors;
 using ProductManagement.Persistence;
+using ProductManagement.Persistence.Repositories;
 using Serilog;
 using Serilog.Events;
 
@@ -13,6 +16,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connString = "Filename=:memory:";
+var conn = new SqliteConnection(connString);
+conn.Open();
+
+builder.Services.AddDbContext<ProductManagementDbContext>(opt => opt.UseSqlite(conn));
+
+DatabaseHelper.EnsureDatabaseCreated(conn);
+
+builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IProductProcessor, ProductProcessor>();
 
 var logger = new LoggerConfiguration()
   .ReadFrom.Configuration(builder.Configuration)
@@ -34,13 +48,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-var connString = "DataSource=:memory";
-var conn = new SqliteConnection(connString);
-conn.Open();
-
-builder.Services.AddDbContext<ProductManagementDbContext>(opt => opt.UseSqlite(conn));
-
-builder.Services.AddScoped<IProductProcessor, ProductProcessor>();
 
 app.UseHttpsRedirection();
 

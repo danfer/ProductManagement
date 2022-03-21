@@ -18,7 +18,7 @@ namespace ProductManagement.Persistence.Repositories
 
         public ProductManagementDbContext _context { get; }
 
-        public void Add(ProductRequest product)
+        public ProductResult Add(ProductRequest product)
         {
             var lastProduct = _context.Products.OrderByDescending(p => p.ProductId).FirstOrDefault();
             int nextProductId = 1;
@@ -34,7 +34,14 @@ namespace ProductManagement.Persistence.Repositories
             });
             _context.SaveChanges();
 
-
+            return new ProductResult
+            {
+                ProductId = nextProductId,
+                ProductName = product.ProductName,
+                CategoryId = product.CategoryId,
+                CategoryName = product.CategoryName,
+                Flag = Core.Enums.ProductResultFlag.Success
+            };
         }
 
         public void Delete(ProductRequest product)

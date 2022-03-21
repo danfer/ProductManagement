@@ -9,16 +9,16 @@ namespace ProductManagement.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private IProductProcessor _productProcessor
-            ;
+        private IProductProcessor _productProcessor;
 
         public ProductsController(IProductProcessor productProcessor)
         {
             _productProcessor = productProcessor;
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> AddProduct(ProductRequest request)
+        public IActionResult AddProduct(ProductRequest request)
         {
             if (ModelState.IsValid)
             {
@@ -30,6 +30,13 @@ namespace ProductManagement.API.Controllers
                 ModelState.AddModelError(nameof(ProductRequest.CategoryId), "No category included");
             }
             return BadRequest(ModelState);
+        }
+
+        [HttpGet]
+        public IEnumerable<ProductResult> Get()
+        {
+            return _productProcessor.GetAvailableProducts()
+            .ToArray();
         }
     }
 }

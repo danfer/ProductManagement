@@ -33,7 +33,7 @@ namespace ProductManagement.API.Test
         [Theory]
         [InlineData(1, true, typeof(OkObjectResult), ProductResultFlag.Success)]
         [InlineData(0, false, typeof(BadRequestObjectResult), ProductResultFlag.Failure)]
-        public async Task ShouldCallProductMethodWhenValid(int expectedMethodCalls, bool isModelValid, Type expectedActionResultType,
+        public void ShouldCallProductMethodWhenValid(int expectedMethodCalls, bool isModelValid, Type expectedActionResultType,
                                                             ProductResultFlag productResultFlag)
         {
             // Arrange
@@ -44,7 +44,7 @@ namespace ProductManagement.API.Test
             _result.Flag = productResultFlag;
 
             // Act
-            var result = await _controller.AddProduct(_request);
+            var result = _controller.AddProduct(_request);
 
             // Assert
             result.ShouldBeOfType(expectedActionResultType);
