@@ -25,8 +25,8 @@ builder.Services.AddDbContext<ProductManagementDbContext>(opt => opt.UseSqlite(c
 
 DatabaseHelper.EnsureDatabaseCreated(conn);
 
-builder.Services.AddTransient<IProductService, ProductService>();
-builder.Services.AddTransient<IProductProcessor, ProductProcessor>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductProcessor, ProductProcessor>();
 
 var logger = new LoggerConfiguration()
   .ReadFrom.Configuration(builder.Configuration)
